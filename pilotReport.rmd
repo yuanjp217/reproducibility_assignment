@@ -15,9 +15,9 @@ output:
 ```{r}
 articleID <- 9-2-2015 # insert the article ID code here e.g., "10-3-2015"
 reportType <- pilot # specify whether this is the 'pilot' report or 'copilot' report
-pilotNames <- Justin Yuan # insert the pilot's name here e.g., "Tom Hardwicke".
+pilotNames <- "Justin Yuan" # insert the pilot's name here e.g., "Tom Hardwicke".
 copilotNames <- NA # # insert the co-pilot's name here e.g., "Michael Frank".
-pilotTTC <- NA # insert the pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
+pilotTTC <- 300 # insert the pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
 copilotTTC <- NA # insert the co-pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
 pilotStartDate <- 11/8/2019 # insert the piloting start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
 copilotStartDate <- NA # insert the co-piloting start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
@@ -30,11 +30,11 @@ completionDate <- NA # insert the date of final report completion in US format e
 
 [PILOT/COPILOT write a brief summary of the methods underlying the target outcomes written in your own words]
 
-Subjects were shown a stimulus array consisting of a target stimulus (a letter) and three distracting numbers. All stimuli were randomly assigned a different color (red, blue, yellow, or magenta). The stimulus array was then masked using "@" symbols, and then the screen turned blank (dark grey). Subjects then either saw a *Presurprise* trial or a *Surprise* trial. 
+Subjects were shown a stimulus array consisting of a target stimulus (a letter) and three distracting numbers. All stimuli were randomly assigned a different color (red, blue, yellow, or magenta). The stimulus array was then masked using "@" symbols, and then the screen turned blank (dark grey).
 
-The *Presurprise* trial consisted of a location task, where the screen showed the numbers 1, 2, 3, and 4, located at the positions of the original 4 stimuli. Subjects were asked to indicate which position the letter stimulus was located at.
+The *Presurprise* trial consisted of a location task, where the screen showed the numbers 1, 2, 3, and 4, located at the positions of the original 4 stimuli. Subjects were asked to indicate which position the letter stimulus was located at. There were 155 *Presurprise* trials
 
-In the *Surprise* trial, the subjects were asked to identify the critical attribute of the stimulus (the identity of the letter) and also a task-irrelevant attribute of the target (the letter's color). 
+In the *Surprise* trial, the subjects were asked to identify the critical attribute of the stimulus (the identity of the letter) and also a task-irrelevant attribute of the target (the letter's color). The *Surprise* trial started on Trial #156, and was followed by 4 *Control* trials.
 
 The percentage of correct responses was the measure of interest.
 
@@ -126,7 +126,7 @@ identity/20
 reportObject <- reproCheck(reportedValue = '0.25', obtainedValue = identity/20, valueType = 'other', round = TRUE)
 
 #surprise location task
-#Moreover, in the surprise trial, participants’ performance on the location task, unlike their performance on the color and identity tasks, was good (80% correct),
+#"Moreover, in the surprise trial, participants’ performance on the location task, unlike their performance on the color and identity tasks, was good (80% correct)"
 location <- sum(surprise_data$acc_location_report == 1)
 location/20
 
@@ -176,37 +176,52 @@ reportObject <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_identity
 ctrl3_location <- sum(ctrl3$acc_location_report == 1) / 20
 reportObject <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_location, valueType = 'other', round = TRUE)
 ```
+
 ```{r 4th control}
 ctrl4 = acc_d %>%
   filter(trial == 160)
 #color task
-sum(ctrl4$acc_color_report == 1) / 20
-
+ctrl4_color <- sum(ctrl4$acc_color_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl4_color, valueType = 'other', round = TRUE)
 #identity task
-sum(ctrl4$acc_identity_report == 1) / 20
-
+ctrl4_identity <- sum(ctrl4$acc_identity_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.75', obtainedValue = ctrl4_identity, valueType = 'other', round = TRUE)
 #location task
-sum(ctrl4$acc_location_report == 1) / 20
+ctrl4_location <- sum(ctrl4$acc_location_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.7', obtainedValue = ctrl4_location, valueType = 'other', round = TRUE)
 ```
 
 ## Inferential statistics
 
 ```{r chi2}
-#"The improvement in each case was significant—color: 70% versus 30%, χ2(1, N = 40) = 6.40, p = .011, ϕ = .40; identity: 75% versus 25%, χ2(1, N = 40) = 10.00, p < .005, ϕ = .50. "
+#"The improvement in each case was significant—color: 70% versus 30%, χ2(1, N = 40) = 6.40, p = .011, ϕ = .40"
 
-#chi squared test of independence contrasting surprise and control (the trial right after surprise)
-#color chi square; 70% vs. 30%
-chisq.test(ctrl$acc_color_report,surprise_data$acc_color_report, correct = FALSE)
+b = matrix(
+  c(ctrl1_color*20, 20-ctrl1_color*20,color,20-color),
+  nrow=2,
+  ncol=2)
+  chisq.test(b, correct = FALSE)
+  
+b_value <- 0.01141 #this is the p-val
+reportObject <- reproCheck(reportedValue = '0.011', obtainedValue = b_value, valueType = 'p', round = TRUE)
 
+#identity: 75% versus 25%, χ2(1, N = 40) = 10.00, p < .005, ϕ = .50. "
 #identity chi square; 75% vs. 25%
-chisq.test(ctrl$acc_identity_report,surprise_data$acc_identity_report, correct = FALSE)
+c = matrix(
+  c(ctrl1_identity*20, 20-ctrl1_identity*20,identity,20-identity),
+  nrow=2,
+  ncol=2)
+ 
+chisq.test(c, correct = FALSE)
+c_value <- 0.001565 #this is the p-val
+reportObject <- reproCheck(reportedValue = '<0.005', obtainedValue = c_value, valueType = 'p', eyeballCheck = TRUE, round = TRUE)
 ```
 
 # Step 5: Conclusion
 
 [Please include a text summary describing your findings. If this reproducibility check was a failure, you should note any suggestions as to what you think the likely cause(s) might be.]
 
-The reproducibility check for this paper was unsuccessfully. The values of task performance were reproduced accurately, but the Chi Squared test values could not be reproduced. I compared the surprise and first control trial as specified in the manuscript, but was unable to reproduce the two test statistics that were originally reported.
+The reproducibility check for this paper was successful. The percentages of correct responses and the Chi-squared findings were reproduced.
 
 
 [PILOT/COPILOT DOD NOT EDIT THE CODE CHUNK BELOW]
