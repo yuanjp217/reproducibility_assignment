@@ -86,37 +86,49 @@ head(d)
 ```{r}
 colnames(d)= c("id", "block", "trial", "color_target", "identity_target", "location_target", "color_response", "identity_response", "location_response", "acc_color_report", "acc_identity_report", "acc_location_report")
 
-#dataset consisting of just the accuracy
+#making a dataset consisting of just the accuracy data
 acc_d <- d%>%
   select(id, block, trial,
          contains("acc"))
 head(acc_d)
-
-
 ```
 
 # Step 4: Run analysis
 
 ## Pre-processing
+```{r presurprise}
+pre <- acc_d %>%
+  filter(trial <= 155)
 
-```{r surprise performance}
+#On the presurprise trials, 89% of responses in the location task were correct
+sum(pre$acc_location_report==1) / length(pre$id)
+
+```
+
+```{r surprise trial}
+#create dataset for only surprise trial data
 surprise_data <- acc_d %>%
   filter(trial == 156)
 
-#these are the subjects who correctly did the color task
+#surprise color task performance
 #"Only 6 of 20 (30%) participants correctly reported the ...."
 color <- sum(surprise_data$acc_color_report == 1)
 color/20
-#Furthermore, performance on the identity task (25% correct)...
-#these are the subjects who correctly did the identity task
+
+#surprise identity taks performance
+#"Furthermore, performance on the identity task (25% correct)..."
 identity <- sum(surprise_data$acc_identity_report == 1)
 identity/20
-# surprise - location task
+
+#surprise location task
+#Moreover, in the surprise trial, participants’ performance on the location task, unlike their performance on the color and identity tasks, was good (80% correct),
 location <- sum(surprise_data$acc_location_report == 1)
 location/20
 ```
 
-```{r 1st control performance}
+```{r 1st control}
+#Participants exhibited a dramatic increase in reporting accuracy for the target letter’s color (70% correct) and identity (75% correct) on the first control trial (i.e., the trial immediately after the surprise trial).
+
 ctrl = acc_d %>%
   filter(trial == 157)
 #color task
@@ -129,7 +141,7 @@ sum(ctrl$acc_identity_report == 1) / 20
 sum(ctrl$acc_location_report == 1) / 20
 ```
 
-```{r 2nd control performance}
+```{r 2nd control}
 ctrl2 = acc_d %>%
   filter(trial == 158)
 #color task
@@ -169,18 +181,18 @@ sum(ctrl4$acc_location_report == 1) / 20
 
 ## Inferential statistics
 
-```{r chi2 tests}
+```{r chi2}
+#"The improvement in each case was significant—color: 70% versus 30%, χ2(1, N = 40) = 6.40, p = .011, ϕ = .40; identity: 75% versus 25%, χ2(1, N = 40) = 10.00, p < .005, ϕ = .50. "
+
 #chi squared test of independence contrasting surprise and control (the trial right after surprise)
+#color chi square; 70% vs. 30%
+chisq.test(ctrl$acc_color_report,surprise_data$acc_color_report, correct = FALSE)
 
-#combined 156 & 157
-chi_set = acc_d %>%
-  filter(trial == 156 | trial == 157)
-#head(chi_set)
-chisq.test(post,correct = FALSE)
-
+#identity chi square; 75% vs. 25%
+chisq.test(ctrl$acc_identity_report,surprise_data$acc_identity_report, correct = FALSE)
 ```
 
-)# Step 5: Conclusion
+# Step 5: Conclusion
 
 [Please include a text summary describing your findings. If this reproducibility check was a failure, you should note any suggestions as to what you think the likely cause(s) might be.]
 
