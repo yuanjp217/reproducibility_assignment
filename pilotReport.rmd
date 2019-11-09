@@ -91,56 +91,80 @@ acc_d <- d%>%
   select(id, block, trial,
          contains("acc"))
 head(acc_d)
+
+
 ```
 
 # Step 4: Run analysis
 
 ## Pre-processing
 
-```{r}
-
-```
-
-## Descriptive statistics
-
-```{r 89% presurprise}
-m = count(acc_d)
-presurprise_acc = sum(acc_d$acc_location_report) / m
-presurprise_acc
-```
-```{r}
-surprise_data <-acc_d %>%
-  group_by(id) %>%
-  filter(trial == 156)
-```
-
 ```{r surprise performance}
-#below is code to list how many subjects correctly did the task divided by the n=20 for percentage.
+surprise_data <- acc_d %>%
+  filter(trial == 156)
+
 #these are the subjects who correctly did the color task
-correct_color <- surprise_data %>%
-  filter(acc_color_report == 1)
-length(correct_color$id)
-
+#"Only 6 of 20 (30%) participants correctly reported the ...."
+color <- sum(surprise_data$acc_color_report == 1)
+color/20
+#Furthermore, performance on the identity task (25% correct)...
 #these are the subjects who correctly did the identity task
-correct_identity <- surprise_data %>%
-  filter(acc_identity_report == 1)
-length(correct_identity$id)
-
+identity <- sum(surprise_data$acc_identity_report == 1)
+identity/20
 # surprise - location task
-correct_location <- surprise_data %>%
-  filter(acc_location_report == 1)
-length(correct_location$id)
+location <- sum(surprise_data$acc_location_report == 1)
+location/20
 ```
 
-```{r control performance}
+```{r 1st control performance}
 ctrl = acc_d %>%
   filter(trial == 157)
-#1st control trial's letter color task
+#color task
 sum(ctrl$acc_color_report == 1) / 20
-#1st control trial's letter identity task
+
+#identity task
 sum(ctrl$acc_identity_report == 1) / 20
 
+#location task
+sum(ctrl$acc_location_report == 1) / 20
+```
 
+```{r 2nd control performance}
+ctrl2 = acc_d %>%
+  filter(trial == 158)
+#color task
+sum(ctrl2$acc_color_report == 1) / 20
+
+#identity task
+sum(ctrl2$acc_identity_report == 1) / 20
+
+#location task
+sum(ctrl2$acc_location_report == 1) / 20
+```
+
+```{r 3rd control}
+ctrl3 = acc_d %>%
+  filter(trial == 159)
+#color task
+sum(ctrl3$acc_color_report == 1) / 20
+
+#identity task
+sum(ctrl3$acc_identity_report == 1) / 20
+
+#location task
+sum(ctrl3$acc_location_report == 1) / 20
+```
+```{r 4th control}
+ctrl4 = acc_d %>%
+  filter(trial == 160)
+#color task
+sum(ctrl4$acc_color_report == 1) / 20
+
+#identity task
+sum(ctrl4$acc_identity_report == 1) / 20
+
+#location task
+sum(ctrl4$acc_location_report == 1) / 20
 ```
 
 ## Inferential statistics
@@ -151,9 +175,9 @@ sum(ctrl$acc_identity_report == 1) / 20
 #combined 156 & 157
 chi_set = acc_d %>%
   filter(trial == 156 | trial == 157)
-head(chi_set)
-#chisq.test(ctrl$acc_color_report,surprise_data$acc_color_report)
-chisq.test(chi_set$acc_color_report,NULL)
+#head(chi_set)
+chisq.test(post,correct = FALSE)
+
 ```
 
 )# Step 5: Conclusion
