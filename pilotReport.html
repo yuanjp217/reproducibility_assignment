@@ -1602,21 +1602,21 @@ surprise_data &lt;- acc_d %&gt;%
 color &lt;- sum(surprise_data$acc_color_report == 1)
 color/20</code></pre>
 <pre><code>## [1] 0.3</code></pre>
-<pre class="r"><code>reportObject &lt;- reproCheck(reportedValue = '0.3', obtainedValue = color/20, valueType = 'other', round = TRUE)</code></pre>
+<pre class="r"><code>surpriseColorCheck &lt;- reproCheck(reportedValue = '0.3', obtainedValue = color/20, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.3) and the obtained value (0.3) differed by 0%. Note that the obtained value was rounded to 1 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#surprise identity taks performance
 #&quot;Furthermore, performance on the identity task (25% correct)...&quot;
 identity &lt;- sum(surprise_data$acc_identity_report == 1)
 identity/20</code></pre>
 <pre><code>## [1] 0.25</code></pre>
-<pre class="r"><code>reportObject &lt;- reproCheck(reportedValue = '0.25', obtainedValue = identity/20, valueType = 'other', round = TRUE)</code></pre>
+<pre class="r"><code>surpriseIdentityCheck &lt;- reproCheck(reportedValue = '0.25', obtainedValue = identity/20, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.25) and the obtained value (0.25) differed by 0%. Note that the obtained value was rounded to 2 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#surprise location task
 #&quot;Moreover, in the surprise trial, participants’ performance on the location task, unlike their performance on the color and identity tasks, was good (80% correct)&quot;
 location &lt;- sum(surprise_data$acc_location_report == 1)
 location/20</code></pre>
 <pre><code>## [1] 0.8</code></pre>
-<pre class="r"><code>reportObject &lt;- reproCheck(reportedValue = '0.8', obtainedValue = location/20, valueType = 'other', round = TRUE)</code></pre>
+<pre class="r"><code>surpriseLocationCheck &lt;- reproCheck(reportedValue = '0.8', obtainedValue = location/20, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.8) and the obtained value (0.8) differed by 0%. Note that the obtained value was rounded to 1 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#Participants exhibited a dramatic increase in reporting accuracy for the target letter’s color (70% correct) and identity (75% correct) on the first control trial (i.e., the trial immediately after the surprise trial).
 
@@ -1624,57 +1624,57 @@ ctrl = acc_d %&gt;%
   filter(trial == 157)
 #color task
 ctrl1_color &lt;- sum(ctrl$acc_color_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.7', obtainedValue = ctrl1_color, valueType = 'other', round = TRUE)</code></pre>
+ctrl1_colorCheck &lt;- reproCheck(reportedValue = '0.7', obtainedValue = ctrl1_color, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.7) and the obtained value (0.7) differed by 0%. Note that the obtained value was rounded to 1 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#identity task
 ctrl1_identity &lt;- sum(ctrl$acc_identity_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.75', obtainedValue = ctrl1_identity, valueType = 'other', round = TRUE)</code></pre>
+ctrl1_identityCheck &lt;- reproCheck(reportedValue = '0.75', obtainedValue = ctrl1_identity, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.75) and the obtained value (0.75) differed by 0%. Note that the obtained value was rounded to 2 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#location task
 ctrl1_location &lt;- sum(ctrl$acc_location_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.8', obtainedValue = ctrl1_location, valueType = 'other', round = TRUE)</code></pre>
+ctrl1_locationCheck &lt;- reproCheck(reportedValue = '0.8', obtainedValue = ctrl1_location, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.8) and the obtained value (0.8) differed by 0%. Note that the obtained value was rounded to 1 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>ctrl2 = acc_d %&gt;%
   filter(trial == 158)
 #color task
 ctrl2_color &lt;- sum(ctrl2$acc_color_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.75', obtainedValue = ctrl2_color, valueType = 'other', round = TRUE)</code></pre>
+ctrl2_colorCheck &lt;- reproCheck(reportedValue = '0.75', obtainedValue = ctrl2_color, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.75) and the obtained value (0.75) differed by 0%. Note that the obtained value was rounded to 2 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#identity task
 ctrl2_identity &lt;- sum(ctrl2$acc_identity_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.75', obtainedValue = ctrl2_identity, valueType = 'other', round = TRUE)</code></pre>
+ctrl2_identityCheck &lt;- reproCheck(reportedValue = '0.75', obtainedValue = ctrl2_identity, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.75) and the obtained value (0.75) differed by 0%. Note that the obtained value was rounded to 2 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#location task
 ctrl2_location &lt;- sum(ctrl2$acc_location_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.85', obtainedValue = ctrl2_location, valueType = 'other', round = TRUE)</code></pre>
+ctrl2_locationCheck &lt;- reproCheck(reportedValue = '0.85', obtainedValue = ctrl2_location, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.85) and the obtained value (0.85) differed by 0%. Note that the obtained value was rounded to 2 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>ctrl3 = acc_d %&gt;%
   filter(trial == 159)
 #color task
 ctrl3_color &lt;- sum(ctrl3$acc_color_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.7', obtainedValue = ctrl3_color, valueType = 'other', round = TRUE)</code></pre>
+ctrl3_colorCheck &lt;- reproCheck(reportedValue = '0.7', obtainedValue = ctrl3_color, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.7) and the obtained value (0.7) differed by 0%. Note that the obtained value was rounded to 1 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#identity task
 ctrl3_identity &lt;- sum(ctrl3$acc_identity_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_identity, valueType = 'other', round = TRUE)</code></pre>
+ctrl3_identityCheck &lt;- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_identity, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.8) and the obtained value (0.8) differed by 0%. Note that the obtained value was rounded to 1 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#location task
 ctrl3_location &lt;- sum(ctrl3$acc_location_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_location, valueType = 'other', round = TRUE)</code></pre>
+ctrl3_locationCheck &lt;- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_location, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.8) and the obtained value (0.8) differed by 0%. Note that the obtained value was rounded to 1 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>ctrl4 = acc_d %&gt;%
   filter(trial == 160)
 #color task
 ctrl4_color &lt;- sum(ctrl4$acc_color_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.8', obtainedValue = ctrl4_color, valueType = 'other', round = TRUE)</code></pre>
+ctrl4_colorCheck &lt;- reproCheck(reportedValue = '0.8', obtainedValue = ctrl4_color, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.8) and the obtained value (0.8) differed by 0%. Note that the obtained value was rounded to 1 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#identity task
 ctrl4_identity &lt;- sum(ctrl4$acc_identity_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.75', obtainedValue = ctrl4_identity, valueType = 'other', round = TRUE)</code></pre>
+ctrl4_identityCheck &lt;- reproCheck(reportedValue = '0.75', obtainedValue = ctrl4_identity, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.75) and the obtained value (0.75) differed by 0%. Note that the obtained value was rounded to 2 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#location task
 ctrl4_location &lt;- sum(ctrl4$acc_location_report == 1) / 20
-reportObject &lt;- reproCheck(reportedValue = '0.7', obtainedValue = ctrl4_location, valueType = 'other', round = TRUE)</code></pre>
+ctrl4_locationCheck &lt;- reproCheck(reportedValue = '0.7', obtainedValue = ctrl4_location, valueType = 'other', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for other. The reported value (0.7) and the obtained value (0.7) differed by 0%. Note that the obtained value was rounded to 1 decimal places to match the reported value.&quot;</code></pre>
 </div>
 <div id="inferential-statistics" class="section level2">
@@ -1692,7 +1692,7 @@ b = matrix(
 ## data:  b
 ## X-squared = 6.4, df = 1, p-value = 0.01141</code></pre>
 <pre class="r"><code>b_value &lt;- 0.01141 #this is the p-val
-reportObject &lt;- reproCheck(reportedValue = '0.011', obtainedValue = b_value, valueType = 'p', round = TRUE)</code></pre>
+chiPvalCheck1 &lt;- reproCheck(reportedValue = '0.011', obtainedValue = b_value, valueType = 'p', round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for p. The reported value (0.011) and the obtained value (0.011) differed by 0%. Note that the obtained value was rounded to 3 decimal places to match the reported value.&quot;</code></pre>
 <pre class="r"><code>#identity: 75% versus 25%, χ2(1, N = 40) = 10.00, p &lt; .005, ϕ = .50. &quot;
 #identity chi square; 75% vs. 25%
@@ -1708,7 +1708,7 @@ chisq.test(c, correct = FALSE)</code></pre>
 ## data:  c
 ## X-squared = 10, df = 1, p-value = 0.001565</code></pre>
 <pre class="r"><code>c_value &lt;- 0.001565 #this is the p-val
-reportObject &lt;- reproCheck(reportedValue = '&lt;0.005', obtainedValue = c_value, valueType = 'p', eyeballCheck = TRUE, round = TRUE)</code></pre>
+chiPvalCheck2 &lt;- reproCheck(reportedValue = '&lt;0.005', obtainedValue = c_value, valueType = 'p', eyeballCheck = TRUE, round = TRUE)</code></pre>
 <pre><code>## [1] &quot;MATCH for p. Eyeball comparison only.&quot;</code></pre>
 </div>
 </div>
