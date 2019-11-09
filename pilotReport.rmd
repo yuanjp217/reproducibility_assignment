@@ -85,9 +85,12 @@ head(d)
 
 ```{r}
 colnames(d)= c("id", "block", "trial", "color_target", "identity_target", "location_target", "color_response", "identity_response", "location_response", "acc_color_report", "acc_identity_report", "acc_location_report")
-head(d)
 
-
+#dataset consisting of just the accuracy
+acc_d <- d%>%
+  select(id, block, trial,
+         contains("acc"))
+head(acc_d)
 ```
 
 # Step 4: Run analysis
@@ -95,17 +98,49 @@ head(d)
 ## Pre-processing
 
 ```{r}
-location_d <- d %>%
-  select(id, block, trial, 
-         contains("location"))
-head(location_d)
+
 ```
 
 ## Descriptive statistics
 
-```{r}
-presurprise_acc = sum(location_d$acc_location_report) / count(location_d)
+```{r 89% presurprise}
+m = count(acc_d)
+presurprise_acc = sum(acc_d$acc_location_report) / m
 presurprise_acc
+```
+```{r}
+surprise_data <-acc_d %>%
+  group_by(id) %>%
+  filter(trial == 156)
+```
+
+```{r surprise performance}
+#below is code to list how many subjects correctly did the task divided by the n=20 for percentage.
+#these are the subjects who correctly did the color task
+correct_color <- surprise_data %>%
+  filter(acc_color_report == 1)
+length(correct_color$id)
+
+#these are the subjects who correctly did the identity task
+correct_identity <- surprise_data %>%
+  filter(acc_identity_report == 1)
+length(correct_identity$id)
+
+# surprise - location task
+correct_location <- surprise_data %>%
+  filter(acc_location_report == 1)
+length(correct_location$id)
+```
+
+```{r control performance}
+ctrl = acc_d %>%
+  filter(trial == 157)
+#1st control trial's letter color task
+sum(ctrl$acc_color_report == 1) / 20
+#1st control trial's letter identity task
+sum(ctrl$acc_identity_report == 1) / 20
+
+
 ```
 
 ## Inferential statistics
