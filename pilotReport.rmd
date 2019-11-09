@@ -101,8 +101,9 @@ pre <- acc_d %>%
   filter(trial <= 155)
 
 #On the presurprise trials, 89% of responses in the location task were correct
-sum(pre$acc_location_report==1) / length(pre$id)
+presurprise <- sum(pre$acc_location_report==1) / length(pre$id)
 
+reportObject <- reproCheck(reportedValue = '0.89', obtainedValue = presurprise, valueType = 'other', round = TRUE)
 ```
 
 ```{r surprise trial}
@@ -115,15 +116,21 @@ surprise_data <- acc_d %>%
 color <- sum(surprise_data$acc_color_report == 1)
 color/20
 
+reportObject <- reproCheck(reportedValue = '0.3', obtainedValue = color/20, valueType = 'other', round = TRUE)
+
 #surprise identity taks performance
 #"Furthermore, performance on the identity task (25% correct)..."
 identity <- sum(surprise_data$acc_identity_report == 1)
 identity/20
 
+reportObject <- reproCheck(reportedValue = '0.25', obtainedValue = identity/20, valueType = 'other', round = TRUE)
+
 #surprise location task
 #Moreover, in the surprise trial, participants’ performance on the location task, unlike their performance on the color and identity tasks, was good (80% correct),
 location <- sum(surprise_data$acc_location_report == 1)
 location/20
+
+reportObject <- reproCheck(reportedValue = '0.8', obtainedValue = location/20, valueType = 'other', round = TRUE)
 ```
 
 ```{r 1st control}
@@ -132,39 +139,42 @@ location/20
 ctrl = acc_d %>%
   filter(trial == 157)
 #color task
-sum(ctrl$acc_color_report == 1) / 20
-
+ctrl1_color <- sum(ctrl$acc_color_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.7', obtainedValue = ctrl1_color, valueType = 'other', round = TRUE)
 #identity task
-sum(ctrl$acc_identity_report == 1) / 20
-
+ctrl1_identity <- sum(ctrl$acc_identity_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.75', obtainedValue = ctrl1_identity, valueType = 'other', round = TRUE)
 #location task
-sum(ctrl$acc_location_report == 1) / 20
+ctrl1_location <- sum(ctrl$acc_location_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl1_location, valueType = 'other', round = TRUE)
 ```
 
 ```{r 2nd control}
 ctrl2 = acc_d %>%
   filter(trial == 158)
 #color task
-sum(ctrl2$acc_color_report == 1) / 20
-
+ctrl2_color <- sum(ctrl2$acc_color_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.75', obtainedValue = ctrl2_color, valueType = 'other', round = TRUE)
 #identity task
-sum(ctrl2$acc_identity_report == 1) / 20
-
+ctrl2_identity <- sum(ctrl2$acc_identity_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.75', obtainedValue = ctrl2_identity, valueType = 'other', round = TRUE)
 #location task
-sum(ctrl2$acc_location_report == 1) / 20
+ctrl2_location <- sum(ctrl2$acc_location_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.85', obtainedValue = ctrl2_location, valueType = 'other', round = TRUE)
 ```
 
 ```{r 3rd control}
 ctrl3 = acc_d %>%
   filter(trial == 159)
 #color task
-sum(ctrl3$acc_color_report == 1) / 20
-
+ctrl3_color <- sum(ctrl3$acc_color_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.7', obtainedValue = ctrl3_color, valueType = 'other', round = TRUE)
 #identity task
-sum(ctrl3$acc_identity_report == 1) / 20
-
+ctrl3_identity <- sum(ctrl3$acc_identity_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_identity, valueType = 'other', round = TRUE)
 #location task
-sum(ctrl3$acc_location_report == 1) / 20
+ctrl3_location <- sum(ctrl3$acc_location_report == 1) / 20
+reportObject <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_location, valueType = 'other', round = TRUE)
 ```
 ```{r 4th control}
 ctrl4 = acc_d %>%
@@ -195,6 +205,8 @@ chisq.test(ctrl$acc_identity_report,surprise_data$acc_identity_report, correct =
 # Step 5: Conclusion
 
 [Please include a text summary describing your findings. If this reproducibility check was a failure, you should note any suggestions as to what you think the likely cause(s) might be.]
+
+The reproducibility check for this paper was unsuccessfully. The values of task performance were reproduced accurately, but the Chi Squared test values could not be reproduced. I compared the surprise and first control trial as specified in the manuscript, but was unable to reproduce the two test statistics that were originally reported.
 
 
 [PILOT/COPILOT DOD NOT EDIT THE CODE CHUNK BELOW]
