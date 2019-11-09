@@ -14,7 +14,7 @@ output:
 
 ```{r}
 articleID <- 9-2-2015 # insert the article ID code here e.g., "10-3-2015"
-reportType <- pilot # specify whether this is the 'pilot' report or 'copilot' report
+reportType <- 'pilot' # specify whether this is the 'pilot' report or 'copilot' report
 pilotNames <- "Justin Yuan" # insert the pilot's name here e.g., "Tom Hardwicke".
 copilotNames <- NA # # insert the co-pilot's name here e.g., "Michael Frank".
 pilotTTC <- 300 # insert the pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
