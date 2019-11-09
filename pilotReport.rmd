@@ -78,13 +78,14 @@ reportObject <- data.frame(dummyRow = TRUE, reportedValue = NA, obtainedValue = 
 
 ```{r}
 d <- read.csv("GroupD_9-2-2015/data/materials-9859-Top-level_materials/12022-Exp1.csv", sep = ",")
-colnames(d)= c("id", "block", "trial", "color_target", "identity_target", "location_target", "color_response", "identity_response", "acc_color_report", "acc_identity_report", "acc_location_report")
+colnames(d)= c("id", "block", "trial", "color_target", "identity_target", "location_target", "color_response", "identity_response", "location_response", "acc_color_report", "acc_identity_report", "acc_location_report")
 head(d)
 ```
 
 # Step 3: Tidy data
 
 ```{r}
+
 ```
 
 # Step 4: Run analysis
