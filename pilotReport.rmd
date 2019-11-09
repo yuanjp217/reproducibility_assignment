@@ -145,10 +145,18 @@ sum(ctrl$acc_identity_report == 1) / 20
 
 ## Inferential statistics
 
-```{r}
+```{r chi2 tests}
+#chi squared test of independence contrasting surprise and control (the trial right after surprise)
+
+#combined 156 & 157
+chi_set = acc_d %>%
+  filter(trial == 156 | trial == 157)
+head(chi_set)
+#chisq.test(ctrl$acc_color_report,surprise_data$acc_color_report)
+chisq.test(chi_set$acc_color_report,NULL)
 ```
 
-# Step 5: Conclusion
+)# Step 5: Conclusion
 
 [Please include a text summary describing your findings. If this reproducibility check was a failure, you should note any suggestions as to what you think the likely cause(s) might be.]
 
