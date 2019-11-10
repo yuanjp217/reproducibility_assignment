@@ -6,11 +6,7 @@ output:
     toc_float: true
 ---
 
-[TEXT IN SQUARE BRACKETS IS HERE FOR GUIDANCE. PLEASE DELETE TEXT IN SQUARE BRACKETS BEFORE KNITTING THE FINAL REPORT]
-
 # Report Details
-
-[PILOT/COPILOT ENTER RELEVANT REPORT DETAILS HERE]
 
 ```{r}
 articleID <- 9-2-2015 # insert the article ID code here e.g., "10-3-2015"
@@ -21,14 +17,12 @@ pilotTTC <- 300 # insert the pilot's estimated time to complete (in minutes, it 
 copilotTTC <- NA # insert the co-pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
 pilotStartDate <- as.Date("11/08/19", format = "%m/%d/%y") # insert the piloting start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
 copilotStartDate <- NA # insert the co-piloting start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
-completionDate <- NA # insert the date of final report completion in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
+completionDate <- as.Date("11/09/19", format = "%m/%d/%y") # insert the date of final report completion in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
 ```
 
 ------
 
 #### Methods summary: 
-
-[PILOT/COPILOT write a brief summary of the methods underlying the target outcomes written in your own words]
 
 Subjects were shown a stimulus array consisting of a target stimulus (a letter) and three distracting numbers. All stimuli were randomly assigned a different color (red, blue, yellow, or magenta). The stimulus array was then masked using "@" symbols, and then the screen turned blank (dark grey).
 
@@ -42,12 +36,8 @@ The percentage of correct responses was the measure of interest.
 
 #### Target outcomes: 
 
-[PILOT copy and paste the exact target outcomes as written in in targetOutcomes.md]  
-
 > On the presurprise trials, 89% of responses in the location task were correct, which indicates that participants could easily locate the target by using the critical attribute. To analyze the data from the surprise trial, we first divided participants into two groups defined by the order of the surprise tasks (identity task first vs. color task first). We found that the results were almost the same in these two groups. Accordingly, we combined the data for these groups in the analyses reported here. Only 6 of 20 (30%) participants correctly reported the color of the target letter, which is not much better than chance level of 25% (because there were four choices). Furthermore, performance on the identity task (25% correct) was exactly at chance level. These results demonstrate that participants were not capable of reporting a task-relevant attribute of a stimulus that had reached awareness less than 1 s before (i.e., attribute amnesia). Moreover, in the surprise trial, participants’ performance on the location task, unlike their performance on the color and identity tasks, was good (80% correct), and in fact was approximately as good as their performance on the location task in the presurprise trials (89% correct). This indicates that the poor performance on the color and identity tasks was not induced by the surprise test itself; it more likely reflects participants’ failure to remember these attributes. Participants exhibited a dramatic increase in reporting accuracy for the target letter’s color (70% correct) and identity (75% correct) on the first control trial (i.e., the trial immediately after the surprise trial). The improvement in each case was significant—color: 70% versus 30%, χ2(1, N = 40) = 6.40, p = .011, ϕ = .40; identity: 75% versus 25%, χ2(1, N = 40) = 10.00, p < .005, ϕ = .50. Performance on these two tasks remained constant on the final three control trials (color: 75%, 70%, and 80% correct; identity: 75%, 80%, and 75% correct). Participants’ performance on the location task was almost the same on the surprise trial (80% correct) as on the control trials (80%, 85%, 80%, and 70% correct). These results indicate a crucial role for expectation in controlling participants’ ability to report the attributes of a consciously perceived object. Therefore, Experiment 1a showed that when participants did not expect to report a particular attribute of an attended object, they were incapable of doing so, even when that same attribute had reached awareness immediately prior to the test.
 ------
-
-[PILOT/COPILOT DO NOT CHANGE THE CODE IN THE CHUNK BELOW]  
 
 ```{r global_options, include=FALSE}
 # sets up some formatting options for the R Markdown document
@@ -55,8 +45,6 @@ knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
 ```
 
 # Step 1: Load packages and prepare report object
-
-[PILOT/COPILOT Some useful packages are being loaded below. You can add any additional ones you might need too.]
 
 ```{r}
 # load packages
@@ -66,8 +54,6 @@ library(haven) # import and export 'SPSS', 'Stata' and 'SAS' Files
 library(readxl) # import excel files
 library(ReproReports) # custom reporting functions
 ```
-
-[PILOT/COPILOT DO NOT MAKE CHANGES TO THE CODE CHUNK BELOW]
 
 ```{r}
 # Prepare report object. This will be updated automatically by the reproCheck function each time values are compared
@@ -219,12 +205,7 @@ chiPvalCheck2 <- reproCheck(reportedValue = '<0.005', obtainedValue = c_value, v
 
 # Step 5: Conclusion
 
-[Please include a text summary describing your findings. If this reproducibility check was a failure, you should note any suggestions as to what you think the likely cause(s) might be.]
-
 The reproducibility check for this paper was successful. The percentages of correct responses and the Chi-squared findings were reproduced.
-
-
-[PILOT/COPILOT DOD NOT EDIT THE CODE CHUNK BELOW]
 
 ```{r}
 reportObject <- reportObject %>%
@@ -256,8 +237,6 @@ if(reportType == "copilot"){
 ```
 
 # Session information
-
-[This function will output information about the package versions used in this report:]
 
 ```{r session_info, include=TRUE, echo=TRUE, results='markup'}
 devtools::session_info()
