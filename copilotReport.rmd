@@ -1,0 +1,264 @@
+---
+title: "Reproducibility Report"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+[TEXT IN SQUARE BRACKETS IS HERE FOR GUIDANCE. PLEASE DELETE TEXT IN SQUARE BRACKETS BEFORE KNITTING THE FINAL REPORT]
+
+# Report Details
+
+[PILOT/COPILOT ENTER RELEVANT REPORT DETAILS HERE]
+
+```{r}
+articleID <- 9-2-2015 # insert the article ID code here e.g., "10-3-2015"
+reportType <- 'pilot' # specify whether this is the 'pilot' report or 'copilot' report
+pilotNames <- "Justin Yuan" # insert the pilot's name here e.g., "Tom Hardwicke".
+copilotNames <- 'Ethan Roy' # # insert the co-pilot's name here e.g., "Michael Frank".
+pilotTTC <- 300 # insert the pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
+copilotTTC <- NA # insert the co-pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
+pilotStartDate <- as.Date("11/08/19", format = "%m/%d/%y") # insert the piloting start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
+copilotStartDate <- as.Date("11/09/19", format = "%m/%d/%y") # insert the co-piloting start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
+completionDate <- NA # insert the date of final report completion in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
+```
+
+------
+
+#### Methods summary: 
+
+[PILOT/COPILOT write a brief summary of the methods underlying the target outcomes written in your own words]
+
+Subjects were shown a stimulus array consisting of a target stimulus (a letter) and three distracting numbers. All stimuli were randomly assigned a different color (red, blue, yellow, or magenta). The stimulus array was then masked using "@" symbols, and then the screen turned blank (dark grey).
+
+The *Presurprise* trial consisted of a location task, where the screen showed the numbers 1, 2, 3, and 4, located at the positions of the original 4 stimuli. Subjects were asked to indicate which position the letter stimulus was located at. There were 155 *Presurprise* trials
+
+In the *Surprise* trial, the subjects were asked to identify the critical attribute of the stimulus (the identity of the letter) and also a task-irrelevant attribute of the target (the letter's color). The *Surprise* trial started on Trial #156, and was followed by 4 *Control* trials.
+
+The percentage of correct responses was the measure of interest.
+
+------
+
+#### Target outcomes: 
+
+[PILOT copy and paste the exact target outcomes as written in in targetOutcomes.md]  
+
+> On the presurprise trials, 89% of responses in the location task were correct, which indicates that participants could easily locate the target by using the critical attribute. To analyze the data from the surprise trial, we first divided participants into two groups defined by the order of the surprise tasks (identity task first vs. color task first). We found that the results were almost the same in these two groups. Accordingly, we combined the data for these groups in the analyses reported here. Only 6 of 20 (30%) participants correctly reported the color of the target letter, which is not much better than chance level of 25% (because there were four choices). Furthermore, performance on the identity task (25% correct) was exactly at chance level. These results demonstrate that participants were not capable of reporting a task-relevant attribute of a stimulus that had reached awareness less than 1 s before (i.e., attribute amnesia). Moreover, in the surprise trial, participants’ performance on the location task, unlike their performance on the color and identity tasks, was good (80% correct), and in fact was approximately as good as their performance on the location task in the presurprise trials (89% correct). This indicates that the poor performance on the color and identity tasks was not induced by the surprise test itself; it more likely reflects participants’ failure to remember these attributes. Participants exhibited a dramatic increase in reporting accuracy for the target letter’s color (70% correct) and identity (75% correct) on the first control trial (i.e., the trial immediately after the surprise trial). The improvement in each case was significant—color: 70% versus 30%, χ2(1, N = 40) = 6.40, p = .011, ϕ = .40; identity: 75% versus 25%, χ2(1, N = 40) = 10.00, p < .005, ϕ = .50. Performance on these two tasks remained constant on the final three control trials (color: 75%, 70%, and 80% correct; identity: 75%, 80%, and 75% correct). Participants’ performance on the location task was almost the same on the surprise trial (80% correct) as on the control trials (80%, 85%, 80%, and 70% correct). These results indicate a crucial role for expectation in controlling participants’ ability to report the attributes of a consciously perceived object. Therefore, Experiment 1a showed that when participants did not expect to report a particular attribute of an attended object, they were incapable of doing so, even when that same attribute had reached awareness immediately prior to the test.
+------
+
+[PILOT/COPILOT DO NOT CHANGE THE CODE IN THE CHUNK BELOW]  
+
+```{r global_options, include=FALSE}
+# sets up some formatting options for the R Markdown document
+knitr::opts_chunk$set(echo=TRUE, warning=FALSE, message=FALSE)
+```
+
+# Step 1: Load packages and prepare report object
+
+[PILOT/COPILOT Some useful packages are being loaded below. You can add any additional ones you might need too.]
+
+```{r}
+# load packages
+library(tidyverse) # for data munging
+library(knitr) # for kable table formating
+library(haven) # import and export 'SPSS', 'Stata' and 'SAS' Files
+library(readxl) # import excel files
+library(ReproReports) # custom reporting functions
+```
+
+[PILOT/COPILOT DO NOT MAKE CHANGES TO THE CODE CHUNK BELOW]
+
+```{r}
+# Prepare report object. This will be updated automatically by the reproCheck function each time values are compared
+reportObject <- data.frame(dummyRow = TRUE, reportedValue = NA, obtainedValue = NA, valueType = NA, percentageError = NA, comparisonOutcome = NA, eyeballCheck = NA)
+```
+
+# Step 2: Load data
+
+```{r}
+d <- read.csv("GroupD_9-2-2015/data/materials-9859-Top-level_materials/12022-Exp1.csv", sep = ",")
+head(d)
+```
+
+# Step 3: Tidy data
+
+```{r}
+colnames(d)= c("id", "block", "trial", "color_target", "identity_target", "location_target", "color_response", "identity_response", "location_response", "acc_color_report", "acc_identity_report", "acc_location_report")
+
+#making a dataset consisting of just the accuracy data
+acc_d <- d%>%
+  select(id, block, trial,
+         contains("acc"))
+head(acc_d)
+```
+
+# Step 4: Run analysis
+
+## Pre-processing
+```{r presurprise}
+pre <- acc_d %>%
+  filter(trial <= 155)
+
+#On the presurprise trials, 89% of responses in the location task were correct
+presurprise <- sum(pre$acc_location_report==1) / length(pre$id)
+
+reportObject <- reproCheck(reportedValue = '0.89', obtainedValue = presurprise, valueType = 'other', round = TRUE)
+```
+
+```{r surprise trial}
+#create dataset for only surprise trial data
+surprise_data <- acc_d %>%
+  filter(trial == 156)
+
+#surprise color task performance
+#"Only 6 of 20 (30%) participants correctly reported the ...."
+color <- sum(surprise_data$acc_color_report == 1)
+color/20
+
+surpriseColorCheck <- reproCheck(reportedValue = '0.3', obtainedValue = color/20, valueType = 'other', round = TRUE)
+
+#surprise identity taks performance
+#"Furthermore, performance on the identity task (25% correct)..."
+identity <- sum(surprise_data$acc_identity_report == 1)
+identity/20
+
+surpriseIdentityCheck <- reproCheck(reportedValue = '0.25', obtainedValue = identity/20, valueType = 'other', round = TRUE)
+
+#surprise location task
+#"Moreover, in the surprise trial, participants’ performance on the location task, unlike their performance on the color and identity tasks, was good (80% correct)"
+location <- sum(surprise_data$acc_location_report == 1)
+location/20
+
+surpriseLocationCheck <- reproCheck(reportedValue = '0.8', obtainedValue = location/20, valueType = 'other', round = TRUE)
+```
+
+```{r 1st control}
+#Participants exhibited a dramatic increase in reporting accuracy for the target letter’s color (70% correct) and identity (75% correct) on the first control trial (i.e., the trial immediately after the surprise trial).
+
+ctrl = acc_d %>%
+  filter(trial == 157)
+#color task
+ctrl1_color <- sum(ctrl$acc_color_report == 1) / 20
+ctrl1_colorCheck <- reproCheck(reportedValue = '0.7', obtainedValue = ctrl1_color, valueType = 'other', round = TRUE)
+#identity task
+ctrl1_identity <- sum(ctrl$acc_identity_report == 1) / 20
+ctrl1_identityCheck <- reproCheck(reportedValue = '0.75', obtainedValue = ctrl1_identity, valueType = 'other', round = TRUE)
+#location task
+ctrl1_location <- sum(ctrl$acc_location_report == 1) / 20
+ctrl1_locationCheck <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl1_location, valueType = 'other', round = TRUE)
+```
+
+```{r 2nd control}
+ctrl2 = acc_d %>%
+  filter(trial == 158)
+#color task
+ctrl2_color <- sum(ctrl2$acc_color_report == 1) / 20
+ctrl2_colorCheck <- reproCheck(reportedValue = '0.75', obtainedValue = ctrl2_color, valueType = 'other', round = TRUE)
+#identity task
+ctrl2_identity <- sum(ctrl2$acc_identity_report == 1) / 20
+ctrl2_identityCheck <- reproCheck(reportedValue = '0.75', obtainedValue = ctrl2_identity, valueType = 'other', round = TRUE)
+#location task
+ctrl2_location <- sum(ctrl2$acc_location_report == 1) / 20
+ctrl2_locationCheck <- reproCheck(reportedValue = '0.85', obtainedValue = ctrl2_location, valueType = 'other', round = TRUE)
+```
+
+```{r 3rd control}
+ctrl3 = acc_d %>%
+  filter(trial == 159)
+#color task
+ctrl3_color <- sum(ctrl3$acc_color_report == 1) / 20
+ctrl3_colorCheck <- reproCheck(reportedValue = '0.7', obtainedValue = ctrl3_color, valueType = 'other', round = TRUE)
+#identity task
+ctrl3_identity <- sum(ctrl3$acc_identity_report == 1) / 20
+ctrl3_identityCheck <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_identity, valueType = 'other', round = TRUE)
+#location task
+ctrl3_location <- sum(ctrl3$acc_location_report == 1) / 20
+ctrl3_locationCheck <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl3_location, valueType = 'other', round = TRUE)
+```
+
+```{r 4th control}
+ctrl4 = acc_d %>%
+  filter(trial == 160)
+#color task
+ctrl4_color <- sum(ctrl4$acc_color_report == 1) / 20
+ctrl4_colorCheck <- reproCheck(reportedValue = '0.8', obtainedValue = ctrl4_color, valueType = 'other', round = TRUE)
+#identity task
+ctrl4_identity <- sum(ctrl4$acc_identity_report == 1) / 20
+ctrl4_identityCheck <- reproCheck(reportedValue = '0.75', obtainedValue = ctrl4_identity, valueType = 'other', round = TRUE)
+#location task
+ctrl4_location <- sum(ctrl4$acc_location_report == 1) / 20
+ctrl4_locationCheck <- reproCheck(reportedValue = '0.7', obtainedValue = ctrl4_location, valueType = 'other', round = TRUE)
+```
+
+## Inferential statistics
+
+```{r chi2}
+#"The improvement in each case was significant—color: 70% versus 30%, χ2(1, N = 40) = 6.40, p = .011, ϕ = .40"
+
+b = matrix(
+  c(ctrl1_color*20, 20-ctrl1_color*20,color,20-color),
+  nrow=2,
+  ncol=2)
+  chisq.test(b, correct = FALSE)
+  
+b_value <- 0.01141 #this is the p-val
+chiPvalCheck1 <- reproCheck(reportedValue = '0.011', obtainedValue = b_value, valueType = 'p', round = TRUE)
+
+#identity: 75% versus 25%, χ2(1, N = 40) = 10.00, p < .005, ϕ = .50. "
+#identity chi square; 75% vs. 25%
+c = matrix(
+  c(ctrl1_identity*20, 20-ctrl1_identity*20,identity,20-identity),
+  nrow=2,
+  ncol=2)
+ 
+chisq.test(c, correct = FALSE)
+c_value <- 0.001565 #this is the p-val
+chiPvalCheck2 <- reproCheck(reportedValue = '<0.005', obtainedValue = c_value, valueType = 'p', eyeballCheck = TRUE, round = TRUE)
+```
+
+# Step 5: Conclusion
+
+[Please include a text summary describing your findings. If this reproducibility check was a failure, you should note any suggestions as to what you think the likely cause(s) might be.]
+
+The reproducibility check for this paper was successful. The percentages of correct responses and the Chi-squared findings were reproduced.
+
+
+[PILOT/COPILOT DOD NOT EDIT THE CODE CHUNK BELOW]
+
+```{r}
+reportObject <- reportObject %>%
+  filter(dummyRow == FALSE) %>% # remove the dummy row
+  select(-dummyRow) %>% # remove dummy row designation
+  mutate(articleID = articleID) %>% # add variables to report 
+  select(articleID, everything()) # make articleID first column
+
+# decide on final outcome
+if(any(reportObject$comparisonOutcome %in% c("MAJOR_ERROR", "DECISION_ERROR"))){
+  finalOutcome <- "Failure"
+}else{
+  finalOutcome <- "Success"
+}
+
+# collate report extra details
+reportExtras <- data.frame(articleID, pilotNames, copilotNames, pilotTTC, copilotTTC, pilotStartDate, copilotStartDate, completionDate, finalOutcome)
+
+# save report objects
+if(reportType == "pilot"){
+  write_csv(reportObject, "pilotReportDetailed.csv")
+  write_csv(reportExtras, "pilotReportExtras.csv")
+}
+
+if(reportType == "copilot"){
+  write_csv(reportObject, "copilotReportDetailed.csv")
+  write_csv(reportExtras, "copilotReportExtras.csv")
+}
+```
+
+# Session information
+
+[This function will output information about the package versions used in this report:]
+
+```{r session_info, include=TRUE, echo=TRUE, results='markup'}
+devtools::session_info()
+```
