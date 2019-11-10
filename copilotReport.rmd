@@ -18,7 +18,7 @@ reportType <- 'pilot' # specify whether this is the 'pilot' report or 'copilot' 
 pilotNames <- "Justin Yuan" # insert the pilot's name here e.g., "Tom Hardwicke".
 copilotNames <- 'Ethan Roy' # # insert the co-pilot's name here e.g., "Michael Frank".
 pilotTTC <- 300 # insert the pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
-copilotTTC <- NA # insert the co-pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
+copilotTTC <- 90 # insert the co-pilot's estimated time to complete (in minutes, it is fine to approximate) e.g., 120
 pilotStartDate <- as.Date("11/08/19", format = "%m/%d/%y") # insert the piloting start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
 copilotStartDate <- as.Date("11/09/19", format = "%m/%d/%y") # insert the co-piloting start date in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
 completionDate <- NA # insert the date of final report completion in US format e.g., as.Date("01/25/18", format = "%m/%d/%y")
